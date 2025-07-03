@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #181c24;
+  color: #fff;
+  min-height: 100vh;
+}
+/* Add to index.css or a global CSS file */
+.gradient-text {
+  background: linear-gradient(90deg, #3cf2ff 0%, #7b61ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

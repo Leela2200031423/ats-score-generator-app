@@ -1,0 +1,183 @@
+.analysis-page {
+  min-height: 100vh;
+  background: #10121a;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 0;
+}
+
+.analysis-container {
+  display: flex;
+  gap: 36px;
+  width: 90vw;
+  max-width: 1400px;
+  align-items: stretch; 
+  /* Make columns equal height */
+}
+
+.analysis-left {
+  flex: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.resume-card {
+  background: #181c24;
+  border-radius: 18px;
+  box-shadow: 0 2px 24px #00000022;
+  padding: 24px 18px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%; /* Fill parent height */
+}
+
+.resume-card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #3cf2ff;
+  letter-spacing: 1px;
+}
+
+.resume-preview {
+  width: 100%;
+  height: 600px; /* Set a fixed height for scroll */
+  border: none;
+  border-radius: 10px;
+  background: #23243a;
+  box-shadow: 0 2px 12px #3cf2ff22;
+  flex: 1;
+}
+
+.resume-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #bfc9e6;
+  margin-top: 40px;
+}
+
+.analysis-right {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.score-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(90deg, #3cf2ff 0%, #7b61ff 100%);
+  border-radius: 16px;
+  padding: 24px 32px;
+  box-shadow: 0 2px 24px #3cf2ff33;
+  margin-bottom: 8px;
+  border: 3px solid #fff;
+}
+
+.score-value {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.score-icon {
+  font-size: 2.5rem;
+  background: #181c24;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.score-label {
+  font-size: 1.1rem;
+  color: #23243a;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.analysis-section-card {
+  background: #181c24;
+  border-radius: 16px;
+  padding: 22px 28px;
+  box-shadow: 0 2px 24px #00000022;
+  margin-bottom: 0;
+}
+
+.analysis-section-card .section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.analysis-section-card.strengths {
+  border-left: 5px solid #3cf2ff;
+}
+.analysis-section-card.weaknesses {
+  border-left: 5px solid #ff6bcb;
+}
+.analysis-section-card.suggestions {
+  border-left: 5px solid #7b61ff;
+}
+
+.analysis-section-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #bfc9e6;
+  font-size: 1.05rem;
+}
+
+.no-analysis {
+  color: #bfc9e6;
+  font-size: 1.2rem;
+  margin-top: 40px;
+}
+
+@media (max-width: 500px) {
+  .analysis-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .analysis-left, .analysis-right {
+    width: 100%;
+    max-width: 100vw;
+  }
+  .resume-card {
+    max-width: 100vw;
+    width: 100%;
+    padding: 10px 0;
+    min-height: unset; /* Remove min-height to fit content */
+    background: #181c24;
+    box-shadow: 0 2px 24px #00000022;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .resume-preview {
+    width: 96vw;
+    min-width: 0;
+    height: 70vw; /* Responsive height, adjust as needed */
+    max-height: 70vw;
+    border-radius: 8px;
+    background: #23243a;
+    box-shadow: 0 2px 12px #3cf2ff22;
+    display: block;
+  } }
