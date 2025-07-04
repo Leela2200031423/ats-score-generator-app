@@ -1,5 +1,4 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const fs = require('fs');
 const pdfParse = require('pdf-parse');
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -10,11 +9,12 @@ exports.analyzeResume = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const fileBuffer = fs.readFileSync(req.file.path);
+    // ✅ Read file buffer directly from memory (no disk)
+    const fileBuffer = req.file.buffer;
     const data = await pdfParse(fileBuffer);
     const resumeText = data.text;
 
-    const jobDescription = `Full Stack Developer with experience in React, Node.js, and AI integrations.`; // You can replace this with dynamic input later
+    const jobDescription = `Full Stack Developer with experience in React, Node.js, and AI integrations.`;
 
     const prompt = `
 Compare the resume and job description, and return the following:
