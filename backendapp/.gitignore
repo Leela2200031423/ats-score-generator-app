@@ -1,0 +1,15 @@
+# Ignore environment config
+.env
+
+# Ignore uploads folder (file temp storage)
+uploads/
+
+# Ignore installed node modules
+node_modules/
+
+# Ignore logs
+*.log
+
+# Ignore system files
+.DS_Store
+Thumbs.db
