@@ -66,9 +66,10 @@ const Upload = () => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/analyze", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await axios.post("https://ats-score-generator-app-uxkx.vercel.app/api/analyze", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+  });
+
       setAnalysis(res.data.result);
       setResumeFile(file);
       localStorage.setItem("ats_analysis", res.data.result); // persist for reloads
