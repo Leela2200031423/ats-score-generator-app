@@ -9,12 +9,12 @@ exports.analyzeResume = async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    // ✅ Read file buffer directly from memory (no disk)
+    // ✅ Get file buffer directly from memory (not from file system)
     const fileBuffer = req.file.buffer;
     const data = await pdfParse(fileBuffer);
     const resumeText = data.text;
 
-    const jobDescription = `Full Stack Developer with experience in React, Node.js, and AI integrations.`;
+    const jobDescription = `Full Stack Developer with experience in React, Node.js, and AI integrations.`; // Optional: replace with dynamic input
 
     const prompt = `
 Compare the resume and job description, and return the following:

@@ -1,4 +1,4 @@
-require('dotenv').config(); // MUST be the first line
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const analyzeRoutes = require('./routes/analyze');
@@ -8,6 +8,12 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// ✅ Optional: Root route to avoid 404 on browser visits
+app.get('/', (req, res) => {
+  res.send('✅ Resume Analyzer Backend is running.');
+});
+
 app.use('/api/analyze', analyzeRoutes);
 
 app.listen(PORT, () => {
