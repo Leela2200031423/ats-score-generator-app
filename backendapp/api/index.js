@@ -1,4 +1,3 @@
-// backendapp/api/index.js
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
@@ -10,5 +9,4 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/analyze', analyzeRoutes);
 
-// Required by Vercel Serverless
 module.exports = app;

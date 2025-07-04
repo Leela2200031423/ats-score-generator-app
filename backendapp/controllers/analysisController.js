@@ -13,8 +13,9 @@ exports.analyzeResume = async (req, res) => {
     const fileBuffer = fs.readFileSync(req.file.path);
     const data = await pdfParse(fileBuffer);
     const resumeText = data.text;
+    fs.unlinkSync(req.file.path); // Clean up uploaded file
 
-    const jobDescription = `Full Stack Developer with experience in React, Node.js, and AI integrations.`; // You can replace this with dynamic input later
+    const jobDescription = `Full Stack Developer with experience in React, Node.js, and AI integrations.`;
 
     const prompt = `
 Compare the resume and job description, and return the following:
@@ -37,7 +38,7 @@ ${jobDescription}
 
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    const text = result?.response?.text?.() || "No response from Gemini";
 
     res.json({ result: text });
   } catch (err) {
