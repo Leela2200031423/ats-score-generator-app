@@ -66,7 +66,7 @@ const Upload = () => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("https://ats-backend-4lss.onrender.com/upload-resume/", formData, {
+      const res = await axios.post("http://localhost:5000/api/analyze", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setAnalysis(res.data.result);
