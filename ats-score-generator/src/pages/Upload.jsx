@@ -33,7 +33,9 @@ const Upload = () => {
     }
   };
 
-  const handleFile = (selectedFile) => {
+  // Enhanced file handler for Drive/Cloud/Blob support
+  const handleFile = async (selectedFile) => {
+    // If it's a real PDF file
     if (selectedFile && selectedFile.type === "application/pdf") {
       setFile(selectedFile);
       setFileInfo({
@@ -41,14 +43,41 @@ const Upload = () => {
         size: (selectedFile.size / 1024 / 1024).toFixed(2),
       });
       setUploadSuccess(false);
+    } else if (
+      selectedFile &&
+      selectedFile.name &&
+      selectedFile.name.endsWith(".pdf")
+    ) {
+      // Try to fetch the file if it's a blob or Drive link
+      try {
+        const response = await fetch(selectedFile);
+        const blob = await response.blob();
+        if (blob.type === "application/pdf") {
+          const fileFromBlob = new File([blob], selectedFile.name, {
+            type: "application/pdf",
+          });
+          setFile(fileFromBlob);
+          setFileInfo({
+            name: fileFromBlob.name,
+            size: (fileFromBlob.size / 1024 / 1024).toFixed(2),
+          });
+          setUploadSuccess(false);
+        } else {
+          alert("Please select a PDF file.");
+        }
+      } catch (e) {
+        alert(
+          "Could not read file from Drive. Please download to device first, then upload from Files."
+        );
+      }
     } else {
       alert("Please select a PDF file.");
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
-      handleFile(e.target.files[0]);
+      await handleFile(e.target.files[0]);
     }
   };
 
@@ -66,9 +95,13 @@ const Upload = () => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("https://ats-score-generator-app-uxkx.vercel.app/api/analyze", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-  });
+      const res = await axios.post(
+        "https://ats-score-generator-app-uxkx.vercel.app/api/analyze",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       setAnalysis(res.data.result);
       setResumeFile(file);
@@ -124,7 +157,9 @@ const Upload = () => {
               </svg>
             </div>
             <div className="upload-drop-text">
-              <span className="upload-drop-title">Drag &amp; Drop Your Resume</span>
+              <span className="upload-drop-title">
+                Drag &amp; Drop Your Resume
+              </span>
               <span className="upload-drop-desc">
                 or click to browse files (PDF only)
               </span>
@@ -139,10 +174,14 @@ const Upload = () => {
             <input
               ref={inputRef}
               type="file"
-              accept=".pdf"
+              accept="application/pdf"
+              capture
               className="hidden"
               onChange={handleChange}
             />
+            <p className="upload-note" style={{ marginTop: 12, color: "#888", fontSize: 13 }}>
+              If uploading from Google Drive doesn't work, please download the PDF to your device first, then upload from Files.
+            </p>
           </div>
         )}
 
@@ -172,10 +211,7 @@ const Upload = () => {
               >
                 {loading ? "Analyzing..." : "Analyze Resume"}
               </button>
-              <button
-                onClick={handleReset}
-                className="upload-reset-btn"
-              >
+              <button onClick={handleReset} className="upload-reset-btn">
                 Upload Different File
               </button>
             </div>
