@@ -37,6 +37,12 @@ const Upload = () => {
   const handleFile = async (selectedFile) => {
     // If it's a real PDF file
     if (selectedFile && selectedFile.type === "application/pdf") {
+      if (selectedFile.size === 0) {
+        alert(
+          "The selected file is empty. If you uploaded from Google Drive, please download the PDF to your device first, then upload from Files."
+        );
+        return;
+      }
       setFile(selectedFile);
       setFileInfo({
         name: selectedFile.name,
@@ -52,7 +58,7 @@ const Upload = () => {
       try {
         const response = await fetch(selectedFile);
         const blob = await response.blob();
-        if (blob.type === "application/pdf") {
+        if (blob.type === "application/pdf" && blob.size > 0) {
           const fileFromBlob = new File([blob], selectedFile.name, {
             type: "application/pdf",
           });
@@ -63,7 +69,9 @@ const Upload = () => {
           });
           setUploadSuccess(false);
         } else {
-          alert("Please select a PDF file.");
+          alert(
+            "The selected file is empty or not a valid PDF. If you uploaded from Google Drive, please download the PDF to your device first, then upload from Files."
+          );
         }
       } catch (e) {
         alert(
@@ -88,6 +96,12 @@ const Upload = () => {
   const handleAnalyze = async () => {
     if (!file) {
       alert("Please select a resume file first.");
+      return;
+    }
+    if (file.size === 0) {
+      alert(
+        "The selected file is empty. If you uploaded from Google Drive, please download the PDF to your device first, then upload from Files."
+      );
       return;
     }
     setLoading(true);
@@ -180,7 +194,7 @@ const Upload = () => {
               onChange={handleChange}
             />
             <p className="upload-note" style={{ marginTop: 12, color: "#888", fontSize: 13 }}>
-              If uploading from Google Drive doesn't work, please download the PDF to your device first, then upload from Files.
+              <b>Note:</b> If uploading from Google Drive doesn't work, please download the PDF to your device first, then upload from Files. Google Drive uploads on mobile may not provide the actual file.
             </p>
           </div>
         )}
